@@ -3,6 +3,9 @@
 **Alumno**
 Zavala, Martín - 0107957
 
+**Repositorio**
+[https://github.com/tinchoz77/gestiondetarjetas]
+
 ## Sistema
 
 **Objetivo**
