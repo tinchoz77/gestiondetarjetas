@@ -22,4 +22,4 @@ Para ello el sistema permitirá realizar la gestión integral de movimientos en 
 **Tecnologías propuestas**
 - Frontend: React
 - Backend: Node.js
-- Base de datos: MS-SQL Server
+- Base de datos: MongoDB
