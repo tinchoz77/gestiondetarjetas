@@ -25,8 +25,8 @@ movimientosRouter.get("/movimientos/:id", async (req, res) => {
 // Crear un nuevo cliente
 movimientosRouter.post("/movimientos", async (req, res) => {
     const movimiento = new Movimiento({
-        cliente_id: req.body.cliente_id,
-        tarjeta_id: req.body.tarjeta_id,
+        cliente: req.body.cliente,
+        tarjeta: req.body.tarjeta,
         fecha: req.body.fecha,
         descripcion: req.body.descripcion,
         importe: req.body.importe,
@@ -44,8 +44,8 @@ movimientosRouter.put("/movimientos/:id", async (req, res) => {
         if (movimiento == null) {
             res.sendStatus(404);
         } else {
-            movimiento.cliente_id = req.body.cliente_id;
-            movimiento.tarjeta_id = req.body.tarjeta_id;
+            movimiento.cliente = req.body.cliente;
+            movimiento.tarjeta = req.body.tarjeta;
             movimiento.fecha = req.body.fecha;
             movimiento.descripcion = req.body.descripcion;
             movimiento.importe = req.body.importe;
@@ -66,10 +66,10 @@ movimientosRouter.patch("/movimientos/:id", async (req, res) => {
         if (movimiento == null) {
             res.sendStatus(404);
         } else {
-            if (req.body.cliente_id)
-                movimiento.cliente_id = req.body.cliente_id;
-            if (req.body.tarjeta_id)
-                movimiento.tarjeta_id = req.body.tarjeta_id;
+            if (req.body.cliente)
+                movimiento.cliente = req.body.cliente;
+            if (req.body.tarjeta)
+                movimiento.tarjeta = req.body.tarjeta;
             if (req.body.fecha)
                 movimiento.fecha = req.body.fecha;
             if (req.body.descripcion)

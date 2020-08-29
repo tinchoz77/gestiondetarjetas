@@ -24,7 +24,7 @@ tarjetasRouter.get("/tarjetas/:id", async (req, res) => {
 
 // Obtener todas las tarjetas de un cliente
 tarjetasRouter.get("/clientes/:id/tarjetas", async (req, res) => {
-    const tarjetas = await Tarjeta.find({ cliente_id: req.params.id });
+    const tarjetas = await Tarjeta.find({ cliente: req.params.id });
     if (tarjetas.length == 0) {
         res.sendStatus(404);
     } else {
@@ -35,7 +35,7 @@ tarjetasRouter.get("/clientes/:id/tarjetas", async (req, res) => {
 // Crear una nueva tarjeta
 tarjetasRouter.post("/tarjetas", async (req, res) => {
     const tarjeta = new Tarjeta({
-        cliente_id: req.body.cliente_id,
+        cliente: req.body.cliente,
         numero: req.body.numero,
         limite: req.body.limite,
         fechaVencimiento: req.body.fechaVencimiento,
@@ -53,7 +53,7 @@ tarjetasRouter.put("/tarjetas/:id", async (req, res) => {
         if (tarjeta == null) {
             res.sendStatus(404);
         } else {
-            tarjeta.cliente_id = req.body.cliente_id;
+            tarjeta.cliente = req.body.cliente;
             tarjeta.numero = req.body.numero;
             tarjeta.limite = req.body.limite;
             tarjeta.fechaVencimiento = req.body.fechaVencimiento;
@@ -74,8 +74,8 @@ tarjetasRouter.patch("/tarjetas/:id", async (req, res) => {
         if (tarjeta == null) {
             res.sendStatus(404);
         } else {
-            if (req.body.cliente_id)
-                tarjeta.cliente_id = req.body.cliente_id;
+            if (req.body.cliente)
+                tarjeta.cliente = req.body.cliente;
             if (req.body.numero)
                 tarjeta.numero = req.body.numero;
             if (req.body.limite)

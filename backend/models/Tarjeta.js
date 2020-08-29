@@ -2,8 +2,10 @@ const mongoose = require('mongoose');
 
 // Define schema
 const Schema = mongoose.Schema({
-    id: String,
-    cliente_id: String,
+    cliente: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Clientes'
+    },
     numero: String,
     limite: Number,
     fechaVencimiento: Date,

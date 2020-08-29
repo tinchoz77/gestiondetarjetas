@@ -2,9 +2,14 @@ const mongoose = require('mongoose');
 
 // Define schema
 const Schema = mongoose.Schema({
-    id: String,
-    cliente_id: String,
-    tarjeta_id: String,
+    cliente: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Cliente'
+    },
+    tarjeta: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Tarjeta'
+    },
     fecha: Date,
     descripcion: String,
     importe: Number,
