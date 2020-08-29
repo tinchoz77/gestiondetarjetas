@@ -33,6 +33,7 @@ movimientosRouter.post("/movimientos", async (req, res) => {
         activo: req.body.activo,
     })
     await movimiento.save();
+    console.log("Periodo" + movimiento.periodo);
     res.statusCode = 201;
     res.send(movimiento);
 })

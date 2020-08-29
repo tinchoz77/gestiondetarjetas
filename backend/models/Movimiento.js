@@ -16,4 +16,8 @@ const Schema = mongoose.Schema({
     activo: Boolean,
 });
 
+Schema.virtual('periodo').get(function() {
+    return this.fecha.getFullYear() + '-' + (this.fecha.getMonth()+1);
+})
+
 module.exports = mongoose.model("Movimiento", Schema);
