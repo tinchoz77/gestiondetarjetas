@@ -1,11 +1,9 @@
 const express = require('express');
 const moment     = require('moment');
-const routes = require('./routes');
 
-// cargar servicios
-const clientesService = require('./services/clientesService.js');
-const tarjetasService = require('./services/tarjetasService.js');
-const movimientosService = require('./services/movimientosService.js');
+// cargar rutas
+const clientesRoutes = require('./routes/clientesRouter');
+const tarjetasRoutes = require('./routes/tarjetasRouter');
 
 // conectarse con la bd
 const mongoose = require('mongoose');
@@ -22,7 +20,8 @@ app.use((req, res, next) => {
 });
 
 // instalar las rutas
-app.use('/api', routes);
+app.use('/api', clientesRoutes);
+app.use('/api', tarjetasRoutes);
 
 // página de bienvenida
 app.get('/', async (req, res) => {

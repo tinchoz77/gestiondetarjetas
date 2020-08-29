@@ -1,15 +1,15 @@
 const express = require("express")
-const Cliente = require("./models/Cliente")
-const router = express.Router()
+const Cliente = require("../models/Cliente")
+const clientesRouter = express.Router()
 
 // Obtener todos los clientes
-router.get("/clientes", async (req, res) => {
+clientesRouter.get("/clientes", async (req, res) => {
     const clientes = await Cliente.find()
     res.status(200).send(clientes);
 })
 
 // Obtener un cliente particular
-router.get("/clientes/:id", async (req, res) => {
+clientesRouter.get("/clientes/:id", async (req, res) => {
     try {
         const cliente = await Cliente.findOne({ _id: req.params.id });
         res.status(200).send(cliente);
@@ -19,7 +19,7 @@ router.get("/clientes/:id", async (req, res) => {
   })
 
 // Crear un nuevo cliente
-router.post("/clientes", async (req, res) => {
+clientesRouter.post("/clientes", async (req, res) => {
     const cliente = new Cliente({
         nombre: req.body.nombre,
         apellido: req.body.apellido,
@@ -32,7 +32,7 @@ router.post("/clientes", async (req, res) => {
 })
 
 // Actualizar todos los datos del cliente
-router.put("/clientes/:id", async (req, res) => {
+clientesRouter.put("/clientes/:id", async (req, res) => {
     try {
         const cliente = await Cliente.findOne({ _id: req.params.id });
         if (cliente == null) {
@@ -52,7 +52,7 @@ router.put("/clientes/:id", async (req, res) => {
 })
 
 // Actualizar algunos de los datos del cliente
-router.patch("/clientes/:id", async (req, res) => {
+clientesRouter.patch("/clientes/:id", async (req, res) => {
     try {
         const cliente = await Cliente.findOne({ _id: req.params.id });
         if (cliente == null) {
@@ -76,7 +76,7 @@ router.patch("/clientes/:id", async (req, res) => {
 })
 
 // Eliminar un cliente devolviendo el documento eliminado
-router.delete("/clientes/:id", async (req, res) => {
+clientesRouter.delete("/clientes/:id", async (req, res) => {
     try {
         const cliente = await Cliente.findOne({ _id: req.params.id });
         if (cliente == null) {
@@ -91,4 +91,4 @@ router.delete("/clientes/:id", async (req, res) => {
 })
 
 
-module.exports = router
+module.exports = clientesRouter
