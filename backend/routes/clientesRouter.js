@@ -12,7 +12,12 @@ clientesRouter.get("/clientes", async (req, res) => {
 clientesRouter.get("/clientes/:id", async (req, res) => {
     try {
         const cliente = await Cliente.findOne({ _id: req.params.id });
-        res.status(200).send(cliente);
+        if (cliente == null) {
+            res.sendStatus(404);
+        } else {
+            res.status(200).send(cliente);
+        }
+        
     } catch(CastError) {
         res.sendStatus(404);
     }

@@ -12,7 +12,11 @@ movimientosRouter.get("/movimientos", async (req, res) => {
 movimientosRouter.get("/movimientos/:id", async (req, res) => {
     try {
         const movimiento = await Movimiento.findOne({ _id: req.params.id });
-        res.status(200).send(movimiento);
+        if (movimiento == null) {
+            res.sendStatus(404);
+        } else {
+            res.status(200).send(movimiento);
+        }
     } catch(CastError) {
         res.sendStatus(404);
     }

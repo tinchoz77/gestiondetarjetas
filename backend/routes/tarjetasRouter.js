@@ -12,7 +12,11 @@ tarjetasRouter.get("/tarjetas", async (req, res) => {
 tarjetasRouter.get("/tarjetas/:id", async (req, res) => {
     try {
         const tarjeta = await Tarjeta.findOne({ _id: req.params.id });
-        res.status(200).send(tarjeta);
+        if (tarjeta == null) {
+            res.sendStatus(404);
+        } else {
+            res.status(200).send(tarjeta);
+        }
     } catch(CastError) {
         res.sendStatus(404);
     }
