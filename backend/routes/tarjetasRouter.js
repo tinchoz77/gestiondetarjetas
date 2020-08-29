@@ -18,6 +18,16 @@ tarjetasRouter.get("/tarjetas/:id", async (req, res) => {
     }
   })
 
+// Obtener todas las tarjetas de un cliente
+tarjetasRouter.get("/clientes/:id/tarjetas", async (req, res) => {
+    const tarjetas = await Tarjeta.find({ cliente_id: req.params.id });
+    if (tarjetas.length == 0) {
+        res.sendStatus(404);
+    } else {
+        res.status(200).send(tarjetas);
+    }
+  })
+
 // Crear una nueva tarjeta
 tarjetasRouter.post("/tarjetas", async (req, res) => {
     const tarjeta = new Tarjeta({
@@ -32,7 +42,7 @@ tarjetasRouter.post("/tarjetas", async (req, res) => {
     res.send(tarjeta);
 })
 
-// Actualizar todos los datos del cliente
+// Actualizar todos los datos de la tarjeta
 tarjetasRouter.put("/tarjetas/:id", async (req, res) => {
     try {
         const tarjeta = await Tarjeta.findOne({ _id: req.params.id });
@@ -53,7 +63,7 @@ tarjetasRouter.put("/tarjetas/:id", async (req, res) => {
     }
 })
 
-// Actualizar algunos de los datos del cliente
+// Actualizar algunos de los datos de la tarjeta
 tarjetasRouter.patch("/tarjetas/:id", async (req, res) => {
     try {
         const tarjeta = await Tarjeta.findOne({ _id: req.params.id });
