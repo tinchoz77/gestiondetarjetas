@@ -1,21 +1,28 @@
 const express = require('express');
 const moment     = require('moment');
-const bodyParser = require('body-parser');
+const routes = require('./routes');
 
 // cargar servicios
 const clientesService = require('./services/clientesService.js');
 const tarjetasService = require('./services/tarjetasService.js');
 const movimientosService = require('./services/movimientosService.js');
 
+// conectarse con la bd
+const mongoose = require('mongoose');
+mongoose.connect("mongodb://localhost:27017/gestiondetarjetas", { useNewUrlParser: true , useUnifiedTopology: true });
+
 // crear la aplicación
 const app = express();
-app.use(bodyParser.json());
+app.use(express.json());
 
 // log de todos los request recibidos
 app.use((req, res, next) => {
     console.log(`${req.method}: ${req.path} - ${moment().format(moment.HTML5_FMT.DATETIME_LOCAL_MS)}`);
     next();
 });
+
+// instalar las rutas
+app.use('/api', routes);
 
 // página de bienvenida
 app.get('/', async (req, res) => {
@@ -30,71 +37,6 @@ app.get('/', async (req, res) => {
         </html>`
     );
 });
-
-// Clientes
-app.get('/api/clientes', async(req, res) => {
-    res.status(503).end();
-})
-
-app.post('/api/clientes', async(req, res) => {
-    clientesService.add(req.body);
-    //TODO: devolver el cliente recién creado
-    res.status(201).end();
-})
-
-app.put('/api/clientes', async(req, res) => {
-    res.status(503).end();
-})
-
-app.patch('/api/clientes', async(req, res) => {
-    res.status(503).end();
-})
-
-app.delete('/api/clientes', async(req, res) => {
-    res.status(503).end();
-})
-
-// Tarjetas
-app.get('/api/tarjetas', async(req, res) => {
-    res.status(503).end();
-})
-
-app.post('/api/tarjetas', async(req, res) => {
-    res.status(503).end();
-})
-
-app.put('/api/tarjetas', async(req, res) => {
-    res.status(503).end();
-})
-
-app.patch('/api/tarjetas', async(req, res) => {
-    res.status(503).end();
-})
-
-app.delete('/api/tarjetas', async(req, res) => {
-    res.status(503).end();
-})
-
-// Movimientos
-app.get('/api/movimientos', async(req, res) => {
-    res.status(503).end();
-})
-
-app.post('/api/movimientos', async(req, res) => {
-    res.status(503).end();
-})
-
-app.put('/api/movimientos', async(req, res) => {
-    res.status(503).end();
-})
-
-app.patch('/api/movimientos', async(req, res) => {
-    res.status(503).end();
-})
-
-app.delete('/api/movimientos', async(req, res) => {
-    res.status(503).end();
-})
 
 // arrancar el server
 app.listen(process.env.PORT || 3000, function () {
