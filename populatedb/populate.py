@@ -3,12 +3,16 @@ from pymongo import MongoClient
 mongo = MongoClient('localhost', 27017)
 db = mongo.gestiondetarjetas
 
-# generar clientes
 nombres = ["José", "Estéban", "Ana", "Raquel"]
 apellidos = ["Fernández", "Rodríguez", "Pérez", "Márquez"]
+descrips = ["Compra en restaurante", "Supermercado", "Carga tarjeta Sube", "Cena con amigos", "Pasaje en avión"]
 
+# limpiar la base de datos
 db.clientes.delete_many({})
-clientes = []
+db.tarjetas.delete_many({})
+db.movimientos.delete_many({})
+
+# generar clientes
 for n in nombres:
     for a in apellidos:
         email = n + "_" + a + "@yahoo.com.ar"
@@ -19,31 +23,38 @@ for n in nombres:
             "activo": "true"
         }
         res = db.clientes.insert_one(cliente)
-        clientes.append(res.inserted_id)
-        print("creado " + n + " " + a)
+        cliente_id = res.inserted_id
+        print("Cliente: " + n + " " + a)
 
-# generar tarjetas
-tarjetas = []
+        # generar tarjetas
+        for i in range(randint(0, 6)):
+            numtarj = ""
+            for j in range(16):
+                numtarj += str(randint(1,8))
+            tarjeta = {
+                "cliente": cliente_id,
+                "numero": numtarj,
+                "limite": str(randint(1, 8)*500),
+                "fechaVencimiento": "2021-12-31"
+            }
+            res = db.tarjetas.insert_one(tarjeta)
+            tarjeta_id = res.inserted_id
+            print( "- Tarjeta: " + numtarj)
 
-db.tarjetas.delete_many({})
-for c in clientes:
-    for i in range(1, randint(1, 6)):
-        numtarj = ""
-        for j in range(0,16):
-            numtarj += str(randint(1,8))
-        tarjeta = {
-            "cliente": c,
-            "numero": numtarj,
-            "limite": str(randint(1, 8)*500),
-            "fechaVencimiento": "2021-12-31"
-        }
-        res = db.tarjetas.insert_one(tarjeta)
-        tarjetas.append(res.inserted_id)
-        print( "creada " + numtarj)
+            # generar movimientos
+            movimientos = []
+            for k in range(randint(0,200)):
+                movimiento = {
+                    "cliente": cliente_id,
+                    "tarjeta": tarjeta_id,
+                    "fecha": "2020-" + str(randint(8,12)) + "-" + str(randint(1,25)),
+                    "descripcion": descrips[randint(0, 4)],
+                    "importe": randint(1, 8)*100,
+                    "activo": "true"
+                }
+                movimientos.append(movimiento)
+                print("-- Movimiento #" + str(k+1))
 
-# generar movimientos
-descrips = ["Compra en restaurante", "Supermercado", "Carga tarjeta Sube", "Cena con amigos", "Pasaje en avión"]
+            db.movimientos.insert_many(movimientos)
 
-db.movimientos.delete_many({})
-
-
+print("Carga finalizada.")
