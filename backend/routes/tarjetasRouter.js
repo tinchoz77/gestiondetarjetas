@@ -1,5 +1,6 @@
 const express = require("express")
 const Tarjeta = require("../models/Tarjeta")
+const Movimiento = require("../models/Movimiento")
 const tarjetasRouter = express.Router()
 
 // Obtener todas las tarjetas
@@ -17,8 +18,8 @@ tarjetasRouter.get("/tarjetas/:id", async (req, res) => {
         } else {
             res.status(200).send(tarjeta);
         }
-    } catch(CastError) {
-        res.sendStatus(404);
+    } catch {
+        res.sendStatus(500);
     }
   })
 
@@ -29,6 +30,16 @@ tarjetasRouter.get("/clientes/:id/tarjetas", async (req, res) => {
         res.sendStatus(404);
     } else {
         res.status(200).send(tarjetas);
+    }
+  })
+
+// Obtener todos los movimientos para una tarjeta
+tarjetasRouter.get("/tarjetas/:id/movimientos", async (req, res) => {
+    const movimientos = await Movimiento.find({ tarjeta: req.params.id });
+    if (movimientos.length == 0) {
+        res.sendStatus(404);
+    } else {
+        res.status(200).send(movimientos);
     }
   })
 
@@ -62,8 +73,8 @@ tarjetasRouter.put("/tarjetas/:id", async (req, res) => {
             await tarjeta.save();
             res.status(200).send(tarjeta);
         }
-    } catch(CastError) {
-        res.sendStatus(404);
+    } catch {
+        res.sendStatus(500);
     }
 })
 
@@ -88,8 +99,8 @@ tarjetasRouter.patch("/tarjetas/:id", async (req, res) => {
             await tarjeta.save();
             res.status(200).send(tarjeta);
         }
-    } catch(CastError) {
-        res.sendStatus(404);
+    } catch {
+        res.sendStatus(500);
     }
 })
 
@@ -103,8 +114,8 @@ tarjetasRouter.delete("/tarjetas/:id", async (req, res) => {
             await Tarjeta.deleteOne({ _id: req.params.id });
             res.status(200).send(tarjeta);
         }
-    } catch(CastError) {
-        res.sendStatus(404);
+    } catch {
+        res.sendStatus(500);
     }
 })
 
