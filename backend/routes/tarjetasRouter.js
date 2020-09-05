@@ -44,9 +44,9 @@ tarjetasRouter.get("/tarjetas/:id/movimientos", async (req, res) => {
   })
 
 // Crear una nueva tarjeta
-tarjetasRouter.post("/tarjetas", async (req, res) => {
+tarjetasRouter.post("/clientes/:id/tarjetas", async (req, res) => {
     const tarjeta = new Tarjeta({
-        cliente: req.body.cliente,
+        cliente: req.params.id,
         numero: req.body.numero,
         limite: req.body.limite,
         fechaVencimiento: req.body.fechaVencimiento,
