@@ -51,6 +51,16 @@ movimientosRouter.patch("/movimientos/:id", async (req, res) => {
     }
 })
 
+// Obtener todos los movimientos para una tarjeta
+movimientosRouter.get("/tarjetas/:id/movimientos", async (req, res) => {
+    const movimientos = await Movimiento.find({ tarjeta: req.params.id });
+    if (!movimientos.length) {
+        res.sendStatus(404);
+    } else {
+        res.status(200).send(movimientos);
+    }
+  })
+
 // No se permite eliminar un movimiento
 movimientosRouter.delete("/movimientos/:id", async (req, res) => {
     res.sendStatus(403);

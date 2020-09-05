@@ -1,6 +1,5 @@
 const express = require("express")
 const Tarjeta = require("../models/Tarjeta")
-const Movimiento = require("../models/Movimiento")
 const tarjetasRouter = express.Router()
 
 // Obtener todas las tarjetas
@@ -22,20 +21,10 @@ tarjetasRouter.get("/tarjetas/:id", async (req, res) => {
 // Obtener todas las tarjetas de un cliente
 tarjetasRouter.get("/clientes/:id/tarjetas", async (req, res) => {
     const tarjetas = await Tarjeta.find({ cliente: req.params.id });
-    if (tarjetas.length == 0) {
+    if (!tarjetas.length) {
         res.sendStatus(404);
     } else {
         res.status(200).send(tarjetas);
-    }
-  })
-
-// Obtener todos los movimientos para una tarjeta
-tarjetasRouter.get("/tarjetas/:id/movimientos", async (req, res) => {
-    const movimientos = await Movimiento.find({ tarjeta: req.params.id });
-    if (movimientos.length == 0) {
-        res.sendStatus(404);
-    } else {
-        res.status(200).send(movimientos);
     }
   })
 
