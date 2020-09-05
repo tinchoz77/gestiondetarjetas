@@ -23,10 +23,10 @@ movimientosRouter.get("/movimientos/:id", async (req, res) => {
   })
 
 // Crear un nuevo cliente
-movimientosRouter.post("/movimientos", async (req, res) => {
+movimientosRouter.post("/tarjetas/:id/movimientos", async (req, res) => {
     const movimiento = new Movimiento({
         cliente: req.body.cliente,
-        tarjeta: req.body.tarjeta,
+        tarjeta: req.params.id,
         fecha: req.body.fecha,
         descripcion: req.body.descripcion,
         importe: req.body.importe,
