@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 app.use('/api', clientesRoutes);
 app.use('/api', tarjetasRoutes);
 app.use('/api', movimientosRoutes);
-
+ 
 // página de bienvenida
 app.get('/', async (req, res) => {
     res.send(
@@ -37,6 +37,11 @@ app.get('/', async (req, res) => {
             </body>
         </html>`
     );
+});
+
+// fallback: para las rutas no definidas
+app.use((req, res, next) => {
+    res.sendStatus(404);
 });
 
 // arrancar el server
