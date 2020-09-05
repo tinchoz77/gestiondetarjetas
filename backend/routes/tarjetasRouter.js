@@ -11,15 +11,11 @@ tarjetasRouter.get("/tarjetas", async (req, res) => {
 
 // Obtener una tarjeta particular
 tarjetasRouter.get("/tarjetas/:id", async (req, res) => {
-    try {
-        const tarjeta = await Tarjeta.findOne({ _id: req.params.id });
-        if (tarjeta == null) {
-            res.sendStatus(404);
-        } else {
-            res.status(200).send(tarjeta);
-        }
-    } catch {
-        res.sendStatus(500);
+    const tarjeta = await Tarjeta.findById(req.params.id);
+    if (tarjeta == null) {
+        res.sendStatus(404);
+    } else {
+        res.status(200).send(tarjeta);
     }
   })
 
@@ -53,69 +49,55 @@ tarjetasRouter.post("/clientes/:id/tarjetas", async (req, res) => {
         activo: req.body.activo,
     })
     await tarjeta.save();
-    res.statusCode = 201;
-    res.send(tarjeta);
+    res.status(201).send(tarjeta);
 })
 
 // Actualizar todos los datos de la tarjeta
 tarjetasRouter.put("/tarjetas/:id", async (req, res) => {
-    try {
-        const tarjeta = await Tarjeta.findOne({ _id: req.params.id });
-        if (tarjeta == null) {
-            res.sendStatus(404);
-        } else {
-            tarjeta.cliente = req.body.cliente;
-            tarjeta.numero = req.body.numero;
-            tarjeta.limite = req.body.limite;
-            tarjeta.fechaVencimiento = req.body.fechaVencimiento;
-            tarjeta.activo = req.body.activo;
-            
-            await tarjeta.save();
-            res.status(200).send(tarjeta);
-        }
-    } catch {
-        res.sendStatus(500);
+    const tarjeta = await Tarjeta.findById(req.params.id);
+    if (tarjeta == null) {
+        res.sendStatus(404);
+    } else {
+        tarjeta.cliente = req.body.cliente;
+        tarjeta.numero = req.body.numero;
+        tarjeta.limite = req.body.limite;
+        tarjeta.fechaVencimiento = req.body.fechaVencimiento;
+        tarjeta.activo = req.body.activo;
+        
+        await tarjeta.save();
+        res.status(200).send(tarjeta);
     }
 })
 
 // Actualizar algunos de los datos de la tarjeta
 tarjetasRouter.patch("/tarjetas/:id", async (req, res) => {
-    try {
-        const tarjeta = await Tarjeta.findOne({ _id: req.params.id });
-        if (tarjeta == null) {
-            res.sendStatus(404);
-        } else {
-            if (req.body.cliente)
-                tarjeta.cliente = req.body.cliente;
-            if (req.body.numero)
-                tarjeta.numero = req.body.numero;
-            if (req.body.limite)
-                tarjeta.limite = req.body.limite;
-            if (req.body.fechaVencimiento)
-                tarjeta.fechaVencimiento = req.body.fechaVencimiento;
-            if (req.body.activo)
-                tarjeta.activo = req.body.activo;
-            
-            await tarjeta.save();
-            res.status(200).send(tarjeta);
-        }
-    } catch {
-        res.sendStatus(500);
+    const tarjeta = await Tarjeta.findById(req.params.id);
+    if (tarjeta == null) {
+        res.sendStatus(404);
+    } else {
+        if (req.body.cliente)
+            tarjeta.cliente = req.body.cliente;
+        if (req.body.numero)
+            tarjeta.numero = req.body.numero;
+        if (req.body.limite)
+            tarjeta.limite = req.body.limite;
+        if (req.body.fechaVencimiento)
+            tarjeta.fechaVencimiento = req.body.fechaVencimiento;
+        if (req.body.activo)
+            tarjeta.activo = req.body.activo;
+        
+        await tarjeta.save();
+        res.status(200).send(tarjeta);
     }
 })
 
 // Eliminar una tarjeta devolviendo el documento eliminado
 tarjetasRouter.delete("/tarjetas/:id", async (req, res) => {
-    try {
-        const tarjeta = await Tarjeta.findOne({ _id: req.params.id });
-        if (tarjeta == null) {
-            res.sendStatus(404);
-        } else {
-            await Tarjeta.deleteOne({ _id: req.params.id });
-            res.status(200).send(tarjeta);
-        }
-    } catch {
-        res.sendStatus(500);
+    const tarjeta = await Tarjeta.findByIdAndDelete(req.params.id);
+    if (tarjeta == null) {
+        res.sendStatus(404);
+    } else {
+        res.status(200).send(tarjeta);
     }
 })
 

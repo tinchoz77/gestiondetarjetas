@@ -10,15 +10,11 @@ movimientosRouter.get("/movimientos", async (req, res) => {
 
 // Obtener un movimiento particular
 movimientosRouter.get("/movimientos/:id", async (req, res) => {
-    try {
-        const movimiento = await Movimiento.findOne({ _id: req.params.id });
-        if (movimiento == null) {
-            res.sendStatus(404);
-        } else {
-            res.status(200).send(movimiento);
-        }
-    } catch(CastError) {
+    const movimiento = await Movimiento.findById(req.params.id);
+    if (movimiento == null) {
         res.sendStatus(404);
+    } else {
+        res.status(200).send(movimiento);
     }
   })
 
@@ -33,9 +29,7 @@ movimientosRouter.post("/tarjetas/:id/movimientos", async (req, res) => {
         activo: req.body.activo,
     })
     await movimiento.save();
-    console.log("Periodo" + movimiento.periodo);
-    res.statusCode = 201;
-    res.send(movimiento);
+    res.status(201).send(movimiento);
 })
 
 // No se permite actualizar todos los datos del movimiento
@@ -45,19 +39,15 @@ movimientosRouter.put("/movimientos/:id", async (req, res) => {
 
 // Actualizar el estado del movimiento
 movimientosRouter.patch("/movimientos/:id", async (req, res) => {
-    try {
-        const movimiento = await Movimiento.findOne({ _id: req.params.id });
-        if (movimiento == null) {
-            res.sendStatus(404);
-        } else {
-            if (req.body.activo)
-                movimiento.activo = req.body.activo;
-            
-            await movimiento.save();
-            res.status(200).send(movimiento);
-        }
-    } catch(CastError) {
+    const movimiento = await Movimiento.findById(req.params.id);
+    if (movimiento == null) {
         res.sendStatus(404);
+    } else {
+        if (req.body.activo)
+            movimiento.activo = req.body.activo;
+        
+        await movimiento.save();
+        res.status(200).send(movimiento);
     }
 })
 
@@ -65,6 +55,5 @@ movimientosRouter.patch("/movimientos/:id", async (req, res) => {
 movimientosRouter.delete("/movimientos/:id", async (req, res) => {
     res.sendStatus(403);
 })
-
 
 module.exports = movimientosRouter

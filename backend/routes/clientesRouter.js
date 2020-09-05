@@ -10,16 +10,11 @@ clientesRouter.get("/clientes", async (req, res) => {
 
 // Obtener un cliente particular
 clientesRouter.get("/clientes/:id", async (req, res) => {
-    try {
-        const cliente = await Cliente.findOne({ _id: req.params.id });
-        if (cliente == null) {
-            res.sendStatus(404);
-        } else {
-            res.status(200).send(cliente);
-        }
-        
-    } catch(CastError) {
+    const cliente = await Cliente.findById(req.params.id);
+    if (cliente == null) {
         res.sendStatus(404);
+    } else {
+        res.status(200).send(cliente);
     }
   })
 
@@ -32,68 +27,53 @@ clientesRouter.post("/clientes", async (req, res) => {
         activo: req.body.activo,
     })
     await cliente.save();
-    res.statusCode = 201;
-    res.send(cliente);
+    res.status(201).send(cliente);
 })
 
 // Actualizar todos los datos del cliente
 clientesRouter.put("/clientes/:id", async (req, res) => {
-    try {
-        const cliente = await Cliente.findOne({ _id: req.params.id });
-        if (cliente == null) {
-            res.sendStatus(404);
-        } else {
-            cliente.nombre = req.body.nombre;
-            cliente.apellido = req.body.apellido;
-            cliente.email = req.body.email;
-            cliente.activo = req.body.activo;
-            
-            await cliente.save();
-            res.status(200).send(cliente);
-        }
-    } catch(CastError) {
+    const cliente = await Cliente.findById(req.params.id);
+    if (cliente == null) {
         res.sendStatus(404);
+    } else {
+        cliente.nombre = req.body.nombre;
+        cliente.apellido = req.body.apellido;
+        cliente.email = req.body.email;
+        cliente.activo = req.body.activo;
+        
+        await cliente.save();
+        res.status(200).send(cliente);
     }
 })
 
 // Actualizar algunos de los datos del cliente
 clientesRouter.patch("/clientes/:id", async (req, res) => {
-    try {
-        const cliente = await Cliente.findOne({ _id: req.params.id });
-        if (cliente == null) {
-            res.sendStatus(404);
-        } else {
-            if (req.body.nombre)
-                cliente.nombre = req.body.nombre;
-            if (req.body.apellido)
-                cliente.apellido = req.body.apellido;
-            if (req.body.email)
-                cliente.email = req.body.email;
-            if (req.body.activo)
-                cliente.activo = req.body.activo;
-            
-            await cliente.save();
-            res.status(200).send(cliente);
-        }
-    } catch(CastError) {
+    const cliente = await Cliente.findById(req.params.id);
+    if (cliente == null) {
         res.sendStatus(404);
+    } else {
+        if (req.body.nombre)
+            cliente.nombre = req.body.nombre;
+        if (req.body.apellido)
+            cliente.apellido = req.body.apellido;
+        if (req.body.email)
+            cliente.email = req.body.email;
+        if (req.body.activo)
+            cliente.activo = req.body.activo;
+        
+        await cliente.save();
+        res.status(200).send(cliente);
     }
 })
 
 // Eliminar un cliente devolviendo el documento eliminado
 clientesRouter.delete("/clientes/:id", async (req, res) => {
-    try {
-        const cliente = await Cliente.findOne({ _id: req.params.id });
-        if (cliente == null) {
-            res.sendStatus(404);
-        } else {
-            await Cliente.deleteOne({ _id: req.params.id });
-            res.status(200).send(cliente);
-        }
-    } catch(CastError) {
+    const cliente = await Cliente.findByIdAndDelete(req.params.id);
+    if (cliente == null) {
         res.sendStatus(404);
+    } else {
+        res.status(200).send(cliente);
     }
 })
-
 
 module.exports = clientesRouter
