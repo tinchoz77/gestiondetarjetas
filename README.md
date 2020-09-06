@@ -24,6 +24,7 @@ Para ello el sistema permitirá realizar la gestión integral de movimientos en 
 ##### Recurso: clientes
 
 **Crear un cliente**
+
 `POST /api/clientes`
 
 Body:
@@ -43,6 +44,7 @@ Status codes:
 - 201: cliente creado
 
 **Actualizar un cliente**
+
 `PUT /api/clientes/{id}`
 
 Body:
@@ -63,6 +65,7 @@ Status codes:
 - 404: cliente inexistente
 
 **Cambiar un dato de un cliente**
+
 `PATCH /api/clientes/{id}`
 
 Body:
@@ -83,6 +86,7 @@ Status codes:
 - 404: cliente inexistente
 
 **Listar todos los clientes**
+
 `GET /api/clientes`
 
 Responses:
@@ -96,6 +100,7 @@ Status codes:
 - 200: clientes listados
 
 **Listar un cliente**
+
 `GET /api/clientes/{id}`
 
 Responses:
@@ -110,6 +115,7 @@ Status codes:
 - 404: cliente inexistente
 
 **Eliminar un cliente**
+
 `DELETE /api/clientes/{id}`
 
 Responses:
@@ -126,6 +132,7 @@ Status codes:
 ##### Recurso: tarjetas
 
 **Crear una tarjeta**
+
 `POST /api/tarjetas`
 
 Body:
@@ -147,6 +154,7 @@ Status codes:
 - 201: tarjeta creada
 
 **Actualizar una tarjeta**
+
 `PUT /api/tarjetas/{id}`
 
 Body:
@@ -169,6 +177,7 @@ Status codes:
 - 404: tarjeta inexistente
 
 **Cambiar un dato de una tarjeta**
+
 `PATCH /api/tarjetas/{id}`
 
 Body:
@@ -191,6 +200,7 @@ Status codes:
 - 404: tarjeta inexistente
 
 **Listar todas las tarjetas**
+
 `GET /api/tarjetas`
 
 Responses:
@@ -205,6 +215,7 @@ Status codes:
 - 200: tarjetas listadass
 
 **Listar una tarjeta**
+
 `GET /api/tarjetas/{id}`
 
 Responses:
@@ -220,6 +231,7 @@ Status codes:
 - 404: tarjeta inexistente
 
 **Listar las tarjetas de un cliente**
+
 `GET /api/clientes/{id}/tarjetas`
 
 Responses:
@@ -235,6 +247,7 @@ Status codes:
 - 404: el cliente no tiene tarjetas
 
 **Eliminar una tarjeta**
+
 `DELETE /api/tarjetas/{id}`
 
 Responses:
@@ -250,7 +263,111 @@ Status codes:
 - 404: tarjeta inexistente
 
 ##### Recurso: movimientos
-`TODO: documentar`
+
+**Crear un movimiento**
+
+`POST /api/movimientos`
+
+Body:
+- cliente
+- tarjeta
+- fecha
+- descripcion
+- importe
+- activo
+
+Responses:
+- id
+- cliente
+- tarjeta
+- fecha
+- descripcion
+- importe
+- activo
+
+Status codes:
+- 201: cliente creado
+
+**Actualizar un cliente**
+
+`PUT /api/clientes/{id}`
+
+Status codes:
+- 403: operación no permitida
+
+**Cambiar el estado de un movimiento**
+
+`PATCH /api/movimientos/{id}`
+
+Body:
+- activo
+
+Responses:
+- cliente
+- tarjeta
+- fecha
+- descripcion
+- importe
+- activo
+
+Status codes:
+- 200: movimiento actualizado
+- 404: movimiento inexistente
+
+**Listar todos los movimientos**
+
+`GET /api/movimientos`
+
+Responses:
+- id
+- cliente
+- tarjeta
+- fecha
+- descripcion
+- importe
+- activo
+
+Status codes:
+- 200: movimientos listados
+
+**Listar un movimiento**
+
+`GET /api/movimientos/{id}`
+
+Responses:
+- cliente
+- tarjeta
+- fecha
+- descripcion
+- importe
+- activo
+
+Status codes:
+- 200: movimiento listado
+- 404: movimiento inexistente
+
+**Listar los movimientos para una tarjeta**
+
+`GET /api/tarjetas/{id}/movimientos`
+
+Responses:
+- cliente
+- tarjeta
+- fecha
+- descripcion
+- importe
+- activo
+
+Status codes:
+- 200: movimientos listados
+- 404: la tarjeta no tiene movimientos
+
+**Eliminar un movimiento**
+
+`DELETE /api/movimiento/{id}`
+
+Status codes:
+- 403: no se permite eliminar movimientos
 
 ## Tecnologías propuestas
 
