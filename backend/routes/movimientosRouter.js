@@ -19,10 +19,10 @@ movimientosRouter.get("/movimientos/:id", async (req, res) => {
   })
 
 // Crear un nuevo movimiento
-movimientosRouter.post("/tarjetas/:id/movimientos", async (req, res) => {
+movimientosRouter.post("/clientes/:id_cliente/tarjetas/:id_tarjeta/movimientos", async (req, res) => {
     const movimiento = new Movimiento({
-        cliente: req.body.cliente,
-        tarjeta: req.params.id,
+        cliente: req.params.id_cliente,
+        tarjeta: req.params.id_tarjeta,
         fecha: req.body.fecha,
         descripcion: req.body.descripcion,
         importe: req.body.importe,
@@ -52,8 +52,8 @@ movimientosRouter.patch("/movimientos/:id", async (req, res) => {
 })
 
 // Obtener todos los movimientos para una tarjeta
-movimientosRouter.get("/tarjetas/:id/movimientos", async (req, res) => {
-    const movimientos = await Movimiento.find({ tarjeta: req.params.id });
+movimientosRouter.get("/clientes/:id_cliente/tarjetas/:id_tarjeta/movimientos", async (req, res) => {
+    const movimientos = await Movimiento.find({ tarjeta: req.params.id_tarjeta });
     if (!movimientos.length) {
         res.sendStatus(404);
     } else {

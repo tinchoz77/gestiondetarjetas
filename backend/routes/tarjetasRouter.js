@@ -47,7 +47,6 @@ tarjetasRouter.put("/tarjetas/:id", async (req, res) => {
     if (tarjeta == null) {
         res.sendStatus(404);
     } else {
-        tarjeta.cliente = req.body.cliente;
         tarjeta.numero = req.body.numero;
         tarjeta.limite = req.body.limite;
         tarjeta.fechaVencimiento = req.body.fechaVencimiento;
@@ -64,8 +63,6 @@ tarjetasRouter.patch("/tarjetas/:id", async (req, res) => {
     if (tarjeta == null) {
         res.sendStatus(404);
     } else {
-        if (req.body.cliente)
-            tarjeta.cliente = req.body.cliente;
         if (req.body.numero)
             tarjeta.numero = req.body.numero;
         if (req.body.limite)
