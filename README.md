@@ -133,10 +133,9 @@ Status codes:
 
 **Crear una tarjeta**
 
-`POST /api/tarjetas`
+`POST /api/clientes/{id_cliente}/tarjetas`
 
 Body:
-- cliente
 - numero
 - limite
 - fechaVencimiento
@@ -158,7 +157,6 @@ Status codes:
 `PUT /api/tarjetas/{id}`
 
 Body:
-- cliente
 - numero
 - limite
 - fechaVencimiento
@@ -181,7 +179,6 @@ Status codes:
 `PATCH /api/tarjetas/{id}`
 
 Body:
-- cliente
 - numero
 - limite
 - fechaVencimiento
@@ -232,7 +229,7 @@ Status codes:
 
 **Listar las tarjetas de un cliente**
 
-`GET /api/clientes/{id}/tarjetas`
+`GET /api/clientes/{id_cliente}/tarjetas`
 
 Responses:
 - id
@@ -266,11 +263,9 @@ Status codes:
 
 **Crear un movimiento**
 
-`POST /api/movimientos`
+`POST /api/clientes/{id_cliente}/tarjetas/{id_tarjeta}/movimientos`
 
 Body:
-- cliente
-- tarjeta
 - fecha
 - descripcion
 - importe
@@ -288,9 +283,9 @@ Responses:
 Status codes:
 - 201: cliente creado
 
-**Actualizar un cliente**
+**Actualizar un movimiento**
 
-`PUT /api/clientes/{id}`
+`PUT /api/movimientos/{id}`
 
 Status codes:
 - 403: operación no permitida
@@ -348,7 +343,7 @@ Status codes:
 
 **Listar los movimientos para una tarjeta**
 
-`GET /api/tarjetas/{id}/movimientos`
+`GET /api/clientes/{id_cliente}/tarjetas/{id_tarjeta}/movimientos`
 
 Responses:
 - cliente
