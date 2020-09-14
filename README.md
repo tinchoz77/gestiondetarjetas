@@ -357,6 +357,19 @@ Status codes:
 - 200: movimientos listados
 - 404: la tarjeta no tiene movimientos
 
+**Obtener el resumen para un cliente y un período dados**
+
+`GET /api/clientes/{id_cliente}/resumen?periodo={periodo:YYYY-MM}`
+
+Responses:
+- tarjeta: numero
+- movimientos: fecha, descripcion, monto
+
+Status codes:
+- 200: resumen obtenido
+- 400: el parámetro periodo falta o no respeta el formato
+- 404: el cliente no tiene tarjetas activas
+
 **Eliminar un movimiento**
 
 `DELETE /api/movimiento/{id}`

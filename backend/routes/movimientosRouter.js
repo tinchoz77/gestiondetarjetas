@@ -1,5 +1,6 @@
 const express = require("express")
 const Movimiento = require("../models/Movimiento")
+const Tarjeta = require("../models/Tarjeta")
 const movimientosRouter = express.Router()
 
 // Obtener todos los movimientos
@@ -59,7 +60,38 @@ movimientosRouter.get("/clientes/:id_cliente/tarjetas/:id_tarjeta/movimientos", 
     } else {
         res.status(200).send(movimientos);
     }
-  })
+})
+
+// Obtener los movimientos de un cliente para un período agrupados por tarjeta activa
+movimientosRouter.get("/clientes/:id_cliente/resumen", async (req, res) => {
+    const periodo = req.query.periodo;
+    if (periodo == null || !(/^[0-9]{4}-[0-9]{1,2}$/.test(periodo)))     {
+        res.sendStatus(400);
+    } else {
+        const tarjetas = await Tarjeta.find({ cliente: req.params.id_cliente, activo: true});
+        if (!tarjetas.length) {
+            res.sendStatus(404);
+        } else {
+            const resumen = [];
+            for(let i=0; i<tarjetas.length; i++){
+                const movimientos = await Movimiento.find({ tarjeta: tarjetas[i].id });
+                const movimientosFiltrados = [];
+                for(let j=0; j<movimientos.length; j++) {
+                    if (movimientos[j].periodo == periodo) {
+                        movimientosFiltrados.push({
+                            fecha: movimientos[j].fecha,
+                            descripcion: movimientos[j].descripcion,
+                            importe: movimientos[j].importe
+                        })
+                    }
+                }
+                resumen.push({ tarjeta: tarjetas[i].numero,
+                    movimientos: movimientosFiltrados.sort((a,b) => (a.fecha > b.fecha) ? 1 : -1) });
+            }
+            res.status(200).send(resumen);
+        }
+    }
+})
 
 // No se permite eliminar un movimiento
 movimientosRouter.delete("/movimientos/:id", async (req, res) => {
