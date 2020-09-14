@@ -30,8 +30,8 @@ for n in nombres:
         # generar tarjetas
         for i in range(randint(0, 6)):
             numtarj = ""
-            for j in range(16):
-                numtarj += str(randint(1,8))
+            for j in range(4):
+                numtarj += str(randint(2567,8542))
             tarjeta = {
                 "cliente": cliente_id,
                 "numero": numtarj,
