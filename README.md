@@ -288,7 +288,7 @@ Status codes:
 `PUT /api/movimientos/{id}`
 
 Status codes:
-- 403: operación no permitida
+- 405: operación no permitida
 
 **Cambiar el estado de un movimiento**
 
@@ -375,7 +375,7 @@ Status codes:
 `DELETE /api/movimiento/{id}`
 
 Status codes:
-- 403: no se permite eliminar movimientos
+- 405: no se permite eliminar movimientos
 
 ## Tecnologías propuestas
 

@@ -35,7 +35,7 @@ movimientosRouter.post("/clientes/:id_cliente/tarjetas/:id_tarjeta/movimientos",
 
 // No se permite actualizar todos los datos del movimiento
 movimientosRouter.put("/movimientos/:id", async (req, res) => {
-    res.sendStatus(403);
+    res.header("Accept", "GET,POST,PATCH").sendStatus(405);
 })
 
 // Actualizar el estado del movimiento
@@ -95,7 +95,7 @@ movimientosRouter.get("/clientes/:id_cliente/resumen", async (req, res) => {
 
 // No se permite eliminar un movimiento
 movimientosRouter.delete("/movimientos/:id", async (req, res) => {
-    res.sendStatus(403);
+    res.header("Accept", "GET,POST,PATCH").sendStatus(405);
 })
 
 module.exports = movimientosRouter
