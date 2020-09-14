@@ -35,8 +35,10 @@ for n in nombres:
                 "cliente": cliente_id,
                 "numero": numtarj,
                 "limite": str(randint(1, 8)*500),
-                "fechaVencimiento": "2021-12-31"
+                "fechaVencimiento": "2021-12-31",
+                "activo": randint(1,10) > 3
             }
+                
             res = db.tarjetas.insert_one(tarjeta)
             tarjeta_id = res.inserted_id
             print( "- Tarjeta: " + numtarj)
