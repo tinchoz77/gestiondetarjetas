@@ -3,8 +3,9 @@ from pymongo import MongoClient
 mongo = MongoClient('localhost', 27017)
 db = mongo.gestiondetarjetas
 
-nombres = ["José", "Estéban", "Ana", "Raquel"]
-apellidos = ["Fernández", "Rodríguez", "Pérez", "Márquez"]
+nombres = ["Francisco", "Eduardo", "Ana", "Raquel", "Maite", "Santiago"]
+apellidos = ["Fernández", "Rodríguez", "Pérez", "Márquez", "Mitre"]
+dominios = ["gmail.com", "yahoo.com", "hotmail.com", "icloud.com"]
 descrips = ["Compra en restaurante", "Supermercado", "Carga tarjeta Sube", "Cena con amigos", "Pasaje en avión"]
 
 # limpiar la base de datos
@@ -15,7 +16,7 @@ db.movimientos.delete_many({})
 # generar clientes
 for n in nombres:
     for a in apellidos:
-        email = n + "_" + a + "@yahoo.com.ar"
+        email = n.lower() + "." + a[0].lower() + "@" + dominios[randint(0,3)]
         cliente = {
             "nombre": n,
             "apellido": a,
@@ -45,7 +46,7 @@ for n in nombres:
 
             # generar movimientos
             movimientos = []
-            for k in range(randint(0,200)):
+            for k in range(randint(1,200)):
                 movimiento = {
                     "cliente": cliente_id,
                     "tarjeta": tarjeta_id,
